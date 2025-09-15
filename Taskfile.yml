@@ -31,7 +31,7 @@ tasks:
   deploy:
     desc: Configure Kubernetes cluster in specified environment
     deps:
-      # - install
+      - install
       - prepare
     vars:
       # TODO: Want to update the default here to be local inventory

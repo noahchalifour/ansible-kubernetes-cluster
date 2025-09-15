@@ -1,0 +1,4 @@
+warn_list:
+  # Suppress these warnings for setting remote_user for k8s
+  - schema[vars]
+  - var-naming[no-reserved]
