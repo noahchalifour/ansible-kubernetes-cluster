@@ -1,0 +1,55 @@
+version: 3
+
+dotenv:
+  - .env
+
+tasks:
+  # Install dependencies
+  install:
+    desc: Install all dependencies
+    cmds:
+      - pip install -r requirements/pip.txt
+      - ansible-galaxy install -r requirements/ansible.yml
+
+  # Validate configuration
+  validate:
+    desc: Validate the Ansible playbooks
+    deps:
+      - install
+    cmds:
+      - ansible-lint
+      - ansible-playbook --syntax-check main.yml
+
+  # Do some environment preparations
+  prepare:
+    desc: Prepare the environment for deployment
+    cmds:
+      - rm -f inventories/group_vars
+      - ln -s $(pwd)/group_vars inventories/group_vars
+
+  # Deploy to an environment
+  deploy:
+    desc: Configure Kubernetes cluster in specified environment
+    deps:
+      # - install
+      - prepare
+    vars:
+      # TODO: Want to update the default here to be local inventory
+      INVENTORY: 'inventories/{{ .INVENTORY | default "proxmox" }}.yml'
+      VAULT_PASSWORD: '{{ .VAULT_PASSWORD | default ".vault-pass" }}'
+      SSH_PRIVATE_KEY_ARG: |
+        {{- if .SSH_PRIVATE_KEY -}}
+          --private-key {{ .SSH_PRIVATE_KEY }}
+        {{- end -}}
+      VERBOSITY_ARG: |
+        {{- if .VERBOSITY -}}
+          -{{ .VERBOSITY }}
+        {{- end -}}
+    cmds:
+      - >-
+        ansible-playbook
+        {{ .VERBOSITY_ARG }}
+        {{ .SSH_PRIVATE_KEY_ARG }}
+        -i {{ .INVENTORY }}
+        --vault-password-file {{ .VAULT_PASSWORD }}
+        main.yml

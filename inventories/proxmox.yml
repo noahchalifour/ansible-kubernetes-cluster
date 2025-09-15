@@ -1,0 +1,11 @@
+plugin: community.proxmox.proxmox
+want_facts: true
+exclude_nodes: true
+keyed_groups:
+  - key: proxmox_tags_parsed
+    separator: ""
+    prefix: group
+groups:
+  kube_control_plane: "'k8s-control-plane' in (proxmox_tags_parsed | list)"
+  kube_node: "'k8s-worker' in (proxmox_tags_parsed | list)"
+  etcd: "'etcd' in (proxmox_tags_parsed | list)"

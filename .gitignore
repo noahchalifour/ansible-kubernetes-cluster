@@ -1,0 +1,7 @@
+.ansible
+.env
+.gitlab-ci-local
+.vault-pass
+
+# Ignore the symlink
+inventories/group_vars

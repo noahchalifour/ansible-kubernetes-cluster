@@ -1,0 +1,11 @@
+# Enable NGINX ingress controller
+ingress_nginx_enabled: true
+
+# Enable Cert-manager
+cert_manager_enabled: true
+
+# Enable MetalLB load balancer
+metallb_enabled: true
+metallb_speaker_enabled: true
+metallb_namespace: metallb
+kube_proxy_strict_arp: true

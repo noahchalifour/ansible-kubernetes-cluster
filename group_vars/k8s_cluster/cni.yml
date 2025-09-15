@@ -1,0 +1,3 @@
+# Use Cilium network plugin
+kube_network_plugin: cilium
+kube_owner: root
