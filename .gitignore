@@ -2,6 +2,7 @@
 .env
 .gitlab-ci-local
 .vault-pass
+.python-version
 
 # Ignore the symlink
 inventories/group_vars

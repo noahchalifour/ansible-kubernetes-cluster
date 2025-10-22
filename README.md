@@ -112,7 +112,6 @@ Create a `.env` file with your Proxmox configuration:
 PROXMOX_URL=https://your-proxmox.local:8006/api2/json
 PROXMOX_USER=ansible@pve
 PROXMOX_PASSWORD=your-proxmox-password
-PROXMOX_NODE=proxmox-node-name
 
 # SSH Configuration (optional)
 SSH_PRIVATE_KEY=/path/to/your/ssh/key

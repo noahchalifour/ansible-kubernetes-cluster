@@ -14,8 +14,6 @@ tasks:
   # Validate configuration
   validate:
     desc: Validate the Ansible playbooks
-    deps:
-      - install
     cmds:
       - ansible-lint
       - ansible-playbook --syntax-check main.yml
@@ -31,7 +29,6 @@ tasks:
   deploy:
     desc: Configure Kubernetes cluster in specified environment
     deps:
-      - install
       - prepare
     vars:
       # TODO: Want to update the default here to be local inventory
