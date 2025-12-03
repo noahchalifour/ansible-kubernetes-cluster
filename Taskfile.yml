@@ -50,3 +50,21 @@ tasks:
         -i {{ .INVENTORY }}
         --vault-password-file {{ .VAULT_PASSWORD }}
         main.yml
+
+  inventory:
+    desc: Generate and display inventory from Proxmox
+    vars:
+      # TODO: Want to update the default here to be local inventory
+      INVENTORY: 'inventories/{{ .INVENTORY | default "proxmox" }}.yml'
+      VAULT_PASSWORD: '{{ .VAULT_PASSWORD | default ".vault-pass" }}'
+      SSH_PRIVATE_KEY_ARG: |
+        {{- if .SSH_PRIVATE_KEY -}}
+          --private-key {{ .SSH_PRIVATE_KEY }}
+        {{- end -}}
+    cmds:
+      - >-
+        ansible-inventory
+        {{ .SSH_PRIVATE_KEY_ARG }}
+        -i {{ .INVENTORY }}
+        --vault-password-file {{ .VAULT_PASSWORD }}
+        --list
