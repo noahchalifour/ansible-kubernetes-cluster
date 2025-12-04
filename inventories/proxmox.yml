@@ -5,6 +5,9 @@ keyed_groups:
   - key: proxmox_tags_parsed
     separator: ""
     prefix: group
+filters:
+  - "'home-assistant' not in proxmox_tags_parsed"
+  - "'unifi' not in proxmox_tags_parsed"
 groups:
   kube_control_plane: "'k8s-control-plane' in (proxmox_tags_parsed | list)"
   kube_node: "'k8s-worker' in (proxmox_tags_parsed | list)"
